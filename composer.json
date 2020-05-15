@@ -1,0 +1,13 @@
+{
+  "name": "cstuder/parse-swissmetnet",
+  "description": "Parse SwissMetNet Open Data files",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Christian Studer",
+      "email": "cstuder@existenz.ch"
+    }
+  ],
+  "require": {}
+}
