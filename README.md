@@ -1,6 +1,6 @@
 # parse-swissmetnet
 
-Simple PHP package to parse SwissMetNet Open Data files.
+Simple PHP package to parse SwissMetNet Open Data strings.
 
 **Disclaimer:** This library is not official and not affiliated with MeteoSwiss.
 
@@ -23,7 +23,7 @@ Periodicity: 10 minutes.
 1. Download the ZIP archive from the [Open Data portal](https://opendata.swiss/en/dataset/automatische-wetterstationen-aktuelle-messwerte).
 2. Read the legal and licencing information.
 3. Open `1_download_URL.txt`.
-4. Find the links to the data CSVs and metadata TXTs.
+4. Find the links to the data CSVs (I.e. `VQHA80.csv` or `VQHA98.csv` and metadata TXTs.
 
 ## Installation
 
@@ -38,7 +38,7 @@ require('vendor/autoload.php');
 
 $raw = file_get_contents('https://data.geo.admin.ch/ch.meteoschweiz.messwerte-aktuell/VQHA80.csv');
 
-$data = \cstuder\parse-swissmetnet\Parser::parseData($raw);
+$data = \cstuder\ParseSwissMetNet\Parser::parseData($raw);
 
 var_dump($data);
 ```
@@ -51,7 +51,7 @@ Parses a SwissMetNet data string containing measurements.
 
 Returns an array of StdClass objects with the keys `timestamp`, `location`, `parameter`, `value`.
 
-### `parseMetaData(string $raw)`
+### `parseMetadata(string $raw)`
 
 Parses a SwissMetNet file description string containing location and parameter definitions.
 
@@ -59,7 +59,7 @@ Returns two arrays of StdClass objects: `locations` and `parameters`.
 
 ## Testing
 
-`phpunit parserTests`
+`composer run test` to execute the PHPUnit test suite.
 
 ## License
 
