@@ -101,7 +101,7 @@ Returns two arrays of StdClass objects: `locations` and `parameters`.
 
 ## Testing
 
-`composer run test` to execute the PHPUnit test suite.
+`composer test` to execute the PHPUnit test suite.
 
 ## License
 
