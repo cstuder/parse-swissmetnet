@@ -38,20 +38,20 @@ require('vendor/autoload.php');
 
 $raw = file_get_contents('https://data.geo.admin.ch/ch.meteoschweiz.messwerte-aktuell/VQHA80.csv');
 
-$data = \cstuder\ParseSwissMetNet\Parser::parseData($raw);
+$data = \cstuder\ParseSwissMetNet\DataParser::parse($raw);
 
 var_dump($data);
 ```
 
 ## Methods
 
-### `parseData(string $raw)`
+### `DataParser::parse(string $raw)`
 
 Parses a SwissMetNet data string containing measurements.
 
 Returns an array of StdClass objects with the keys `timestamp`, `location`, `parameter`, `value`.
 
-### `parseMetadata(string $raw)`
+### `MetadataParser::parse(string $raw)`
 
 Parses a SwissMetNet file description string containing location and parameter definitions.
 

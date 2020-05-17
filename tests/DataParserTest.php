@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-class ParserTest extends TestCase
+class DataParserTest extends TestCase
 {
     public function testParseData()
     {

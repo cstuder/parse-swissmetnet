@@ -3,11 +3,11 @@
 namespace cstuder\ParseSwissMetNet;
 
 /**
- * Parser for SwissMetNet data and metadata strings
+ * Parser for SwissMetNet data strings
  */
-class Parser
+class DataParser
 {
-    public static function parseData(string $raw)
+    public static function parse(string $raw)
     {
         $data = [];
         // TODO implement this
