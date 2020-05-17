@@ -7,5 +7,4 @@ namespace cstuder\ParseSwissMetNet;
  */
 class DataParser extends DataParserBase
 {
-    protected const SEPARATOR = ';';
 }
