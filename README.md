@@ -79,7 +79,9 @@ var_dump($data);
 
 ## Methods
 
-The parser is intentionally limited: It parses the given string and returns the data if it finds the string to be valid. It throws an exception otherwise. No partial parsing of strings.
+The parser is intentionally limited: It parses the given string and returns all data which looks valid. It silently skips over any line it doesn't understand.
+
+Values are converted to `float`. Missing values are returned as `null`.
 
 ### `DataParser::parse(string $raw)`
 
