@@ -5,22 +5,7 @@ namespace cstuder\ParseSwissMetNet;
 /**
  * Parser for SwissMetNet data strings
  */
-class DataParser
+class DataParser extends DataParserBase
 {
-    public static function parse(string $raw)
-    {
-        $data = [];
-        // TODO implement this
-
-        return $data;
-    }
-
-    public static function parseMetadata(string $raw)
-    {
-        $metadata = [];
-
-        // TODO implement his
-
-        return $metadata;
-    }
+    protected const SEPARATOR = ';';
 }
