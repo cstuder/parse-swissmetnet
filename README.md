@@ -12,7 +12,7 @@ Created for usage on [api.existenz.ch](https://api.existenz.ch) and indirectly o
 
 [MeteoSwiss](https://www.meteoschweiz.admin.ch/) (Bundesamt für Meteorologie und Klimatologie/Federal Office of Meteorology and Climatology) offers a selection of their [SwissMetNet](https://www.meteoswiss.admin.ch/home/measurement-and-forecasting-systems/land-based-stations/automatisches-messnetz.html) data on the [opendata.swiss portal](https://opendata.swiss/en/dataset/automatische-wetterstationen-aktuelle-messwerte).
 
-Measures air temperatures, rain rate, winds, pressure, geopotentials and sunshine duration.
+Measures air temperatures, rain rate, winds, pressure, geopotentials and sunshine duration. Not every station measures every parameter.
 
 Note that most stations measure this 2 meters above ground, but some tower stations locate their sensors higher in the air. The parameters with suffix `_tow` are measured on tower stations.
 
@@ -25,7 +25,7 @@ Periodicity: 10 minutes.
 1. Download the ZIP archive from the [Open Data portal](https://opendata.swiss/en/dataset/automatische-wetterstationen-aktuelle-messwerte).
 2. Read the legal and licencing information.
 3. Open `1_download_URL.txt`.
-4. Find the links to the data CSVs (I.e. `VQHA80.csv` or `VQHA98.csv` and metadata TXTs.
+4. Find the links to the data CSVs (I.e. `VQHA80.csv` or `VQHA98.csv`) and metadata TXTs.
 
 ### Data format
 
@@ -81,7 +81,7 @@ var_dump($data);
 
 The parser is intentionally limited: It parses the given string and returns all data which looks valid. It silently skips over any line it doesn't understand.
 
-Values are converted to `float`. Missing values not returned, the values will never be `null`.
+Values are converted to `float`. Missing values are not returned, the values will never be `null`.
 
 ### `DataParser::parse(string $raw)`
 
