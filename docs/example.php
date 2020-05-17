@@ -6,7 +6,7 @@
 
 require(__DIR__ . '/../vendor/autoload.php');
 
-$raw = file_get_contents(__DIR__ . '/../tests/resources/VQHA80.csv');
+$raw = file_get_contents(__DIR__ . '/../tests/resources/validData/VQHA80.csv');
 
 $data = \cstuder\ParseSwissMetNet\DataParser::parse($raw);
 
