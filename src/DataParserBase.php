@@ -54,17 +54,19 @@ abstract class DataParserBase
 
                 switch ($column) {
                     case static::LOCATION_FIELD_NAME:
+                        // Store current location
                         $location = $value;
                         break;
 
                     case static::DATETIME_FIELD_NAME:
+                        // Store current timestamp parsed from date time string, example: "202005161230"
                         $timestamp = strtotime("{$value} " . static::TIMEZONE);
                         break;
 
                     default:
                         // At this point the location and timestamp are known, so store the value if it isn't missing
                         if ($value == static::MISSING_VALUE_STRING) {
-                            continue;
+                            break;
                         }
 
                         $floatValue = floatval($value);
