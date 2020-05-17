@@ -81,29 +81,29 @@ var_dump($data);
 
 The parser is intentionally limited: It parses the given string and returns all data which looks valid. It silently skips over any line it doesn't understand.
 
-Values are converted to `float`. Missing values are returned as `null`.
+Values are converted to `float`. Missing values not returned, the values will never be `null`.
 
 ### `DataParser::parse(string $raw)`
 
 Parses a SwissMetNet data string containing semicolon separated measurements.
 
-Returns an array of StdClass objects with the keys `timestamp`, `location`, `parameter`, `value`.
+Returns an array of dictionaries with the keys `timestamp`, `location`, `parameter`, `value`.
 
 ### `LegacyDataParser::parse(string $raw)`
 
 Parses an older SwissMetNet data string containing pipe separated measurements.
 
-Returns an array of StdClass objects with the keys `timestamp`, `location`, `parameter`, `value`.
+Returns an array of dictionaries with the keys `timestamp`, `location`, `parameter`, `value`.
 
 ### `MetadataParser::parse(string $raw)`
 
 Parses a SwissMetNet description string containing location and parameter definitions.
 
-Returns two arrays of StdClass objects: `locations` and `parameters`.
+Returns two dictionaries: `locations` and `parameters`, both containing arrays of dictionaries with fields such as location coordinates or paramter units.
 
 ## Testing
 
-`composer test` to execute the PHPUnit test suite.
+Run `composer test` to execute the PHPUnit test suite.
 
 ## License
 

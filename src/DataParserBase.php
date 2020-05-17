@@ -13,6 +13,12 @@ abstract class DataParserBase
     protected const TIMEZONE = 'UTC';
     protected const MISSING_VALUE_STRING = '-';
 
+    /**
+     * Parse data string
+     * 
+     * @param string $raw SwissMetNet data string
+     * @return array
+     */
     public static function parse(string $raw)
     {
         $data = [];
@@ -41,8 +47,8 @@ abstract class DataParserBase
             }
 
             // Finally a value line
-            $location = NULL;
-            $timestamp = NULL;
+            $location = null;
+            $timestamp = null;
             foreach ($parts as $index => $value) {
                 $column = $indices[$index];
 
@@ -56,11 +62,20 @@ abstract class DataParserBase
                         break;
 
                     default:
-                        // At this point the location and timestamp are supposed to be known
-                        $value = $value == static::MISSING_VALUE_STRING ? null : floatval($value);
+                        // At this point the location and timestamp are known, so store the value if it isn't missing
+                        if ($value == static::MISSING_VALUE_STRING) {
+                            continue;
+                        }
+
+                        $floatValue = floatval($value);
 
                         // All good, insert value
-                        $data[] = ['timestamp' => $timestamp, 'location' => $location, 'parameter' => $column, 'value' => $value];
+                        $data[] = [
+                            'timestamp' => $timestamp,
+                            'location' => $location,
+                            'parameter' => $column,
+                            'value' => $floatValue
+                        ];
 
                         break;
                 }
