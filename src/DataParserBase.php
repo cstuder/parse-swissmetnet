@@ -74,9 +74,9 @@ abstract class DataParserBase
                         // All good, insert value
                         $data[] = [
                             'timestamp' => $timestamp,
-                            'location' => $location,
-                            'parameter' => $column,
-                            'value' => $floatValue
+                            'loc' => $location,
+                            'par' => $column,
+                            'val' => $floatValue
                         ];
 
                         break;
