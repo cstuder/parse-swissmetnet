@@ -9,10 +9,9 @@ class MetadataParser
 {
     public static function parse(string $raw)
     {
-        $metadata = [
-            'locations' => [],
-            'parameters' => [],
-        ];
+        $metadata = new \stdClass();
+        $metadata->locations = [];
+        $metadata->parameters = [];
 
         $lines = explode("\n", $raw);
 
@@ -32,7 +31,7 @@ class MetadataParser
                 'alt' => intval($parts[9]),
             ];
 
-            $metadata['locations'][] = $location;
+            $metadata->locations[] = (object) $location;
         }
 
         // Find parameters
@@ -47,7 +46,7 @@ class MetadataParser
                 'description' => trim($parts[3]),
             ];
 
-            $metadata['parameters'][] = $parameter;
+            $metadata->parameters[] = (object) $parameter;
         }
 
         return $metadata;
