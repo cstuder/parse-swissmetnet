@@ -19,7 +19,7 @@ class MetadataParser
         foreach ($lines as $line) {
             // Query for station line
             $parts = [];
-            if (!preg_match("/^([A-Z]{3})[ ]+(.+)[ ]+([0-9]{1,2})°([0-9]{2})'\/([0-9]{1,2})°([0-9]{2})'[ ]+([0-9]+)\/([0-9]+)[ ]+([0-9]+)/", utf8_encode($line), $parts)) continue;
+            if (!preg_match("/^([A-Z]{3,5})[ ]+(.+)[ ]+([0-9]{1,2})°([0-9]{2})'\/([0-9]{1,2})°([0-9]{2})'[ ]+([0-9]+)\/([0-9]+)[ ]+([0-9]+)/", utf8_encode($line), $parts)) continue;
 
             $location = [
                 'id' => $parts[1],
