@@ -72,12 +72,12 @@ abstract class DataParserBase
                         $floatValue = floatval($value);
 
                         // All good, insert value
-                        $data[] = [
+                        $data[] = (object) ([
                             'timestamp' => $timestamp,
                             'loc' => $location,
                             'par' => $column,
                             'val' => $floatValue
-                        ];
+                        ]);
 
                         break;
                 }

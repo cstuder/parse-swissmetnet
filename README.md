@@ -87,19 +87,19 @@ Values are converted to `float`. Missing values are not returned, the values wil
 
 Parses a SwissMetNet data string containing semicolon separated measurements.
 
-Returns an array of dictionaries with the keys `timestamp`, `location`, `parameter`, `value`.
+Returns an array of StdClass objects with the keys `timestamp`, `location`, `parameter`, `value`.
 
 ### `LegacyDataParser::parse(string $raw)`
 
 Parses an older SwissMetNet data string containing pipe separated measurements.
 
-Returns an array of dictionaries with the keys `timestamp`, `location`, `parameter`, `value`.
+Returns an array of StdClass objects with the keys `timestamp`, `location`, `parameter`, `value`.
 
 ### `MetadataParser::parse(string $raw)`
 
 Parses a SwissMetNet description string containing location and parameter definitions.
 
-Returns two dictionaries: `locations` and `parameters`, both containing arrays of dictionaries with fields such as location coordinates or paramter units.
+Returns two dictionaries: `locations` and `parameters`, both containing arrays of StdClass objects with fields such as location coordinates or paramter units.
 
 ## Testing
 
