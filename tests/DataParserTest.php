@@ -2,6 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Quantitative tests of data parsers
+ */
 class DataParserTest extends TestCase
 {
     public function testParseDataVQHA80()
@@ -15,7 +18,27 @@ class DataParserTest extends TestCase
         $this->assertEquals(1, count($this->collectTimestamps($data)));
     }
 
+    public function testParseDataVQHA98()
+    {
+        $raw = file_get_contents(__DIR__ . '/resources/validData/VQHA98.csv');
+        $data = \cstuder\ParseSwissMetNet\DataParser::parse($raw);
 
+        $this->assertEquals(127, count($data));
+        $this->assertEquals(1, count($this->collectParameters($data)));
+        $this->assertEquals(127, count($this->collectLocations($data)));
+        $this->assertEquals(1, count($this->collectTimestamps($data)));
+    }
+
+    public function testParseLegacyDataVQHA69()
+    {
+        $raw = file_get_contents(__DIR__ . '/resources/validLegacyData/VQHA69.csv');
+        $data = \cstuder\ParseSwissMetNet\LegacyDataParser::parse($raw);
+
+        $this->assertEquals(1038, count($data));
+        $this->assertEquals(10, count($this->collectParameters($data)));
+        $this->assertEquals(114, count($this->collectLocations($data)));
+        $this->assertEquals(1, count($this->collectTimestamps($data)));
+    }
 
     private function collectParameters($data)
     {
