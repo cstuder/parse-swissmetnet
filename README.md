@@ -105,6 +105,12 @@ Returns two fields: `locations` and `parameters`, both containing arrays of StdC
 
 Run `composer test` to execute the PHPUnit test suite.
 
+## Releasing
+
+1. Add changes to the [changelog](CHANGELOG.md).
+1. Create a new tag `vX.X.X`.
+1. Push.
+
 ## License
 
 MIT.
