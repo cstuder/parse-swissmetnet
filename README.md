@@ -99,7 +99,7 @@ Returns an array of StdClass objects with the keys `timestamp`, `location`, `par
 
 Parses a SwissMetNet description string containing location and parameter definitions.
 
-Returns two fields: `locations` and `parameters`, both containing arrays of StdClass objects with fields such as location coordinates or paramter units.
+Returns two fields: `locations` and `parameters`, both containing arrays of StdClass objects with fields such as location coordinates or parameter units.
 
 ## Testing
 
