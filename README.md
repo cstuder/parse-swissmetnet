@@ -83,7 +83,7 @@ require('vendor/autoload.php');
 
 $raw = file_get_contents('https://data.geo.admin.ch/ch.meteoschweiz.messwerte-aktuell/VQHA80.csv');
 
-$data = \cstuder\ParseSwissMetNet\DataParser2020::parse($raw);
+$data = \cstuder\ParseSwissMetNet\SuperParser::parse($raw);
 
 var_dump($data);
 ```
@@ -93,6 +93,14 @@ var_dump($data);
 The parser is intentionally limited: It parses the given string and returns all data which looks valid. It silently skips over any line it doesn't understand.
 
 Values are converted to `float`. Missing values are not returned, the values will never be `null`.
+
+### `SuperParser::parse(string $raw)`
+
+Parses a SwissMetNet data string, tries out all available parsers one after another. If any of them finds anything, returns that data.
+
+Returns an empty array if no parsers find anything. Use at your own risk.
+
+Returns an array of StdClass objects with the keys `timestamp`, `location`, `parameter`, `value`.
 
 ### `DataParser2020::parse(string $raw)`
 
@@ -125,6 +133,7 @@ Run `composer test` to execute the PHPUnit test suite.
 ## Releasing
 
 1. Add changes to the [changelog](CHANGELOG.md).
+1. Add new parsers to the `SuperParser`.
 1. Create a new tag `vX.X.X`.
 1. Push.
 
