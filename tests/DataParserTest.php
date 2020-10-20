@@ -7,6 +7,17 @@ use PHPUnit\Framework\TestCase;
  */
 class DataParserTest extends TestCase
 {
+    public function testParseDataVQHA80_2020()
+    {
+        $raw = file_get_contents(__DIR__ . '/resources/validData/VQHA80_2020.csv');
+        $data = \cstuder\ParseSwissMetNet\DataParser2020::parse($raw);
+
+        $this->assertEquals(1734, count($data));
+        $this->assertEquals(20, count($this->collectParameters($data)));
+        $this->assertEquals(158, count($this->collectLocations($data))); // Location CDM is inoperative
+        $this->assertEquals(1, count($this->collectTimestamps($data)));
+    }
+
     public function testParseDataVQHA80()
     {
         $raw = file_get_contents(__DIR__ . '/resources/validData/VQHA80.csv');

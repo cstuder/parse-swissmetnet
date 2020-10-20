@@ -27,9 +27,20 @@ Periodicity: 10 minutes.
 3. Open `1_download_URL.txt`.
 4. Find the links to the data CSVs (I.e. `VQHA80.csv` or `VQHA98.csv`) and metadata TXTs.
 
+### Data format 2020
+
+Starting from 2020-10-19 the data format of `VQHA80` changed slighty from the original format: They are now valid CSV files, semicolon separated, with a new header line:
+
+```csv
+Station/Location;Date;tre200s0;rre150z0;sre000z0;gre000z0;ure200s0;tde200s0;dkl010z0;fu3010z0;fu3010z1;prestas0;pp0qffs0;pp0qnhs0;ppz850s0;ppz700s0;dv1towz0;fu3towz0;fu3towz1;ta1tows0;uretows0;tdetows0
+TAE;202010191400;11.90;0.00;10.00;326.00;67.50;6.10;26.00;4.30;7.20;957.70;1021.00;1021.20;-;-;-;-;-;-;-;-
+COM;202010191400;11.70;0.00;0.00;100.00;68.30;6.10;114.00;1.80;4.30;955.90;1023.60;1023.80;-;-;-;-;-;-;-;-
+...
+```
+
 ### Data format
 
-MeteoSwiss data files are semicolon separated CSVs with a custom header:
+MeteoSwiss data files `VQHA80` are semicolon separated CSVs with a custom header:
 
 ```csv
 MeteoSchweiz / MeteoSuisse / MeteoSvizzera / MeteoSwiss
@@ -72,7 +83,7 @@ require('vendor/autoload.php');
 
 $raw = file_get_contents('https://data.geo.admin.ch/ch.meteoschweiz.messwerte-aktuell/VQHA80.csv');
 
-$data = \cstuder\ParseSwissMetNet\DataParser::parse($raw);
+$data = \cstuder\ParseSwissMetNet\DataParser2020::parse($raw);
 
 var_dump($data);
 ```
@@ -82,6 +93,12 @@ var_dump($data);
 The parser is intentionally limited: It parses the given string and returns all data which looks valid. It silently skips over any line it doesn't understand.
 
 Values are converted to `float`. Missing values are not returned, the values will never be `null`.
+
+### `DataParser2020::parse(string $raw)`
+
+Parses a SwissMetNet data string containing semicolon separated measurements in the 2020 version.
+
+Returns an array of StdClass objects with the keys `timestamp`, `location`, `parameter`, `value`.
 
 ### `DataParser::parse(string $raw)`
 
