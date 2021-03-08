@@ -18,7 +18,7 @@ Note that most stations measure this 2 meters above ground, but some tower stati
 
 Periodicity: 10 minutes.
 
-**Licencing restrictions apply by MeteoSwiss.** See the Open Data download for information.
+**Licencing restrictions apply by MeteoSwiss.** See the Open Data download for detailed informations. You will have to credit any usage of the data with the string "Source: MeteoSwiss".
 
 ### Getting the data
 
@@ -70,6 +70,8 @@ The metadata files are free form textual files with space separated tables. Good
 
 Encoding is ISO-8859-1.
 
+Starting from 2021, the metadata is split up into two files: A text file (I.e. `VQHA80_en.txt`) containing the parameter metadata and a link to a CSV (I.e. `ch.meteoschweiz.messnetz-automatisch_en.csv`) containing the location metadata.
+
 ## Installation
 
 `composer require cstuder/parse-swissmetnet`
@@ -92,7 +94,7 @@ var_dump($data);
 
 The parser is intentionally limited: It parses the given string and returns all data which looks valid. It silently skips over any line it doesn't understand.
 
-Values are converted to `float`. Missing values are not returned, the values will never be `null`.
+Values are converted to `float`. Missing data values are not returned, the values will never be `null`.
 
 ### `SuperParser::parse(string $raw)`
 
@@ -123,6 +125,24 @@ Returns an array of StdClass objects with the keys `timestamp`, `location`, `par
 ### `MetadataParser::parse(string $raw)`
 
 Parses a SwissMetNet description string containing location and parameter definitions.
+
+Returns two fields: `locations` and `parameters`, both containing arrays of StdClass objects with fields such as location coordinates or parameter units.
+
+This parse method behaves like the `SuperParser`: It tries parsing text files à la `VQHA80_en.txt` and CSV files à la `ch.meteoschweiz.messnetz-automatisch_en.txt`. It combines the found metadata into one list.
+
+Note that this method only works on the english version of the CSV due to the translated header row.
+
+### `MetadataParser::parseFromTextFile(string $raw)`
+
+Parses a SwissMetNet description string from a file like `VQHA80_en.txt` containing location and parameter definitions.
+
+Returns two fields: `locations` and `parameters`, both containing arrays of StdClass objects with fields such as location coordinates or parameter units.
+
+### `MetadataParser::parseFromCsvFile(string $raw)`
+
+Parses a SwissMetNet description string from a file like `ch.meteoschweiz.messnetz-automatisch_en.txt` containing location and parameter definitions.
+
+Note that this method only works on the english version of the CSV due to the translated header row.
 
 Returns two fields: `locations` and `parameters`, both containing arrays of StdClass objects with fields such as location coordinates or parameter units.
 
