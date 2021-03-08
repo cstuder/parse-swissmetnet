@@ -7,6 +7,24 @@ use PHPUnit\Framework\TestCase;
  */
 class MetadataParserTest extends TestCase
 {
+    public function testParseMetadataVQHA80_2021_Version()
+    {
+        $raw = file_get_contents(__DIR__ . '/resources/validMetadata/2021/VQHA80_en.txt');
+        $data = \cstuder\ParseSwissMetNet\MetadataParser::parse($raw);
+
+        $this->assertEquals(0, count($data->locations));
+        $this->assertEquals(20, count($data->parameters));
+    }
+
+    public function testParseMetadataMessnetz_Automatisch_2021_Version()
+    {
+        $raw = file_get_contents(__DIR__ . '/resources/validMetadata/2021/ch.meteoschweiz.messnetz-automatisch_en.csv');
+        $data = \cstuder\ParseSwissMetNet\MetadataParser::parse($raw);
+
+        $this->assertEquals(299, count($data->locations));
+        $this->assertEquals(0, count($data->parameters));
+    }
+
     public function testParseMetadataVQHA80()
     {
         $raw = file_get_contents(__DIR__ . '/resources/validMetadata/VQHA80_de.txt');
