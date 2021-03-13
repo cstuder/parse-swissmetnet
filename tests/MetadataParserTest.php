@@ -18,11 +18,13 @@ class MetadataParserTest extends TestCase
 
     public function testParseMetadataMessnetz_Automatisch_2021_Version()
     {
-        $raw = file_get_contents(__DIR__ . '/resources/validMetadata/2021/ch.meteoschweiz.messnetz-automatisch_en.csv');
-        $data = \cstuder\ParseSwissMetNet\MetadataParser::parse($raw);
+        foreach (['en', 'de', 'fr', 'it'] as $lang) {
+            $raw = file_get_contents(__DIR__ . "/resources/validMetadata/2021/ch.meteoschweiz.messnetz-automatisch_{$lang}.csv");
+            $data = \cstuder\ParseSwissMetNet\MetadataParser::parse($raw);
 
-        $this->assertEquals(299, count($data->locations));
-        $this->assertEquals(0, count($data->parameters));
+            $this->assertEquals(299, count($data->locations), "Language: {$lang}");
+            $this->assertEquals(0, count($data->parameters), "Language: {$lang}");
+        }
     }
 
     public function testParseMetadataVQHA80()

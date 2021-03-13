@@ -103,7 +103,7 @@ class MetadataParser
         $metadata->locations = [];
         $metadata->parameters = [];
 
-        if (substr($raw, 0, 10) != '"Station";') {
+        if (substr($raw, 0, 10) != '"Station";' && substr($raw, 0, 11) != '"Stazione";') {
             // Probably not the CSV we're looking for
             return $metadata;
         }
@@ -122,16 +122,20 @@ class MetadataParser
             $location = [];
 
             foreach ($fields as $index => $value) {
-                switch ($headers[$index]) {
+                switch (utf8_encode($headers[$index])) {
                     default:
                         // Unknown header, do nothing.
+                        throw new \Exception(utf8_encode($headers[$index]));
                         break;
 
                     case "Station":
+                    case "Stazione":
                         $location['name'] = utf8_encode($value);
                         break;
 
                     case "Abbr.":
+                    case "Abk.":
+                    case "Abr.":
                         $location['id'] = $value;
                         break;
 
@@ -140,50 +144,82 @@ class MetadataParser
                         break;
 
                     case "Station type":
+                    case "Stationstyp":
+                    case "Type de station":
+                    case "Tipo di stazione":
                         $location['station-type'] = $value;
                         break;
 
                     case "Data Owner":
+                    case "Eigentümer":
+                    case "Propriétaire":
+                    case "Proprietario ":
                         $location['data-owner'] = $value;
                         break;
 
                     case "Data since":
+                    case "Daten seit":
+                    case "Données depuis":
+                    case "Dati dal":
                         $location['data-since'] = $value;
                         break;
 
                     case "Station height m. a. sea level":
+                    case "Stationshöhe m. ü. M.":
+                    case "Altitude station m. s. mer":
+                    case "Altitudine stazione m slm":
                         $location['alt'] = intval($value);
                         break;
 
                     case "Barometric altitude m. a. ground":
+                    case "Barometerhöhe m. ü. Boden":
+                    case "Altitude du baromètre m. s. sol":
+                    case "Altitudine del barometro m da terra":
                         $location['alt-barometric'] = $value ? intval($value) : null;
                         break;
 
+                    case "KoordinatenE":
                     case "CoordinatesE":
+                    case "CoordonnéesE":
+                    case "CoordinateE":
                         $location['chx'] = intval($value);
                         break;
 
                     case "CoordinatesN":
+                    case "KoordinatenN":
+                    case "CoordonnéesN":
+                    case "CoordinateN":
                         $location['chy'] = intval($value);
                         break;
 
                     case "Latitude":
+                    case "Breitengrad":
+                    case "Latitudine":
                         $location['lat'] = floatval($value);
                         break;
 
                     case "Longitude":
+                    case "Längengrad":
+                    case "Longitudine ":
                         $location['lon'] = floatval($value);
                         break;
 
                     case "Canton":
+                    case "Kanton":
+                    case "Cantone":
                         $location['canton'] = $value;
                         break;
 
                     case "Measurements":
+                    case "Messungen":
+                    case "Mesures":
+                    case "Misurazioni":
                         $location['measurements'] = $value;
                         break;
 
                     case "Link":
+                    case "Lien":
+                    case "Collegamento":
                         $location['link'] = $value;
                         break;
                 }

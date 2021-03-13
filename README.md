@@ -130,8 +130,6 @@ Returns two fields: `locations` and `parameters`, both containing arrays of StdC
 
 This parse method behaves like the `SuperParser`: It tries parsing text files à la `VQHA80_en.txt` and CSV files à la `ch.meteoschweiz.messnetz-automatisch_en.txt`. It combines the found metadata into one list.
 
-Note that this method only works on the english version of the CSV due to the translated header row.
-
 ### `MetadataParser::parseFromTextFile(string $raw)`
 
 Parses a SwissMetNet description string from a file like `VQHA80_en.txt` containing location and parameter definitions.
@@ -141,8 +139,6 @@ Returns two fields: `locations` and `parameters`, both containing arrays of StdC
 ### `MetadataParser::parseFromCsvFile(string $raw)`
 
 Parses a SwissMetNet description string from a file like `ch.meteoschweiz.messnetz-automatisch_en.txt` containing location and parameter definitions.
-
-Note that this method only works on the english version of the CSV due to the translated header row.
 
 Returns two fields: `locations` and `parameters`, both containing arrays of StdClass objects with fields such as location coordinates or parameter units.
 
