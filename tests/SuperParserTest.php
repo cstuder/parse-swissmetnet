@@ -17,6 +17,8 @@ class SuperParserTest extends DataParserTestCase
         $this->assertEquals(20, count($this->collectParameters($data)));
         $this->assertEquals(158, count($this->collectLocations($data))); // Location CDM is inoperative
         $this->assertEquals(1, count($this->collectTimestamps($data)));
+
+        $this->assertContainsOnlyInstancesOf('StdClass', $data);
     }
 
     public function testParseDataVQHA80()
@@ -28,6 +30,8 @@ class SuperParserTest extends DataParserTestCase
         $this->assertEquals(20, count($this->collectParameters($data)));
         $this->assertEquals(159, count($this->collectLocations($data)));
         $this->assertEquals(1, count($this->collectTimestamps($data)));
+
+        $this->assertContainsOnlyInstancesOf('StdClass', $data);
     }
 
     public function testParseDataVQHA98()
@@ -39,6 +43,8 @@ class SuperParserTest extends DataParserTestCase
         $this->assertEquals(1, count($this->collectParameters($data)));
         $this->assertEquals(127, count($this->collectLocations($data)));
         $this->assertEquals(1, count($this->collectTimestamps($data)));
+
+        $this->assertContainsOnlyInstancesOf('StdClass', $data);
     }
 
     public function testParseLegacyDataVQHA69()
@@ -50,5 +56,7 @@ class SuperParserTest extends DataParserTestCase
         $this->assertEquals(10, count($this->collectParameters($data)));
         $this->assertEquals(114, count($this->collectLocations($data)));
         $this->assertEquals(1, count($this->collectTimestamps($data)));
+
+        $this->assertContainsOnlyInstancesOf('StdClass', $data);
     }
 }

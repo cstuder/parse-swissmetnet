@@ -226,7 +226,7 @@ class MetadataParser
                 }
             }
 
-            $metadata->locations[] = $location;
+            $metadata->locations[] = (object) $location;
         }
 
         return $metadata;

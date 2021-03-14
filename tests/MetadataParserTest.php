@@ -14,6 +14,9 @@ class MetadataParserTest extends TestCase
 
         $this->assertEquals(0, count($data->locations));
         $this->assertEquals(20, count($data->parameters));
+
+        $this->assertContainsOnlyInstancesOf('StdClass', $data->locations);
+        $this->assertContainsOnlyInstancesOf('StdClass', $data->parameters);
     }
 
     public function testParseMetadataMessnetz_Automatisch_2021_Version()
@@ -24,6 +27,9 @@ class MetadataParserTest extends TestCase
 
             $this->assertEquals(299, count($data->locations), "Language: {$lang}");
             $this->assertEquals(0, count($data->parameters), "Language: {$lang}");
+
+            $this->assertContainsOnlyInstancesOf('StdClass', $data->locations);
+            $this->assertContainsOnlyInstancesOf('StdClass', $data->parameters);
         }
     }
 
@@ -34,6 +40,9 @@ class MetadataParserTest extends TestCase
 
         $this->assertEquals(159, count($data->locations));
         $this->assertEquals(20, count($data->parameters));
+
+        $this->assertContainsOnlyInstancesOf('StdClass', $data->locations);
+        $this->assertContainsOnlyInstancesOf('StdClass', $data->parameters);
     }
 
     public function testParseMetadataVQHA98()
@@ -43,6 +52,9 @@ class MetadataParserTest extends TestCase
 
         $this->assertEquals(132, count($data->locations));
         $this->assertEquals(1, count($data->parameters));
+
+        $this->assertContainsOnlyInstancesOf('StdClass', $data->locations);
+        $this->assertContainsOnlyInstancesOf('StdClass', $data->parameters);
     }
 
     public function testParseLegacyMetadata()
@@ -52,5 +64,8 @@ class MetadataParserTest extends TestCase
 
         $this->assertEquals(114, count($data->locations));
         $this->assertEquals(10, count($data->parameters));
+
+        $this->assertContainsOnlyInstancesOf('StdClass', $data->locations);
+        $this->assertContainsOnlyInstancesOf('StdClass', $data->parameters);
     }
 }
