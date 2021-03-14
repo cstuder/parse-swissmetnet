@@ -125,7 +125,8 @@ class MetadataParser
                 switch (utf8_encode($headers[$index])) {
                     default:
                         // Unknown header, do nothing.
-                        throw new \Exception(utf8_encode($headers[$index]));
+                        var_dump($line, $headers[$index]);
+                        throw new \Exception(utf8_encode($headers[$index])); // TODO remove this.
                         break;
 
                     case "Station":
@@ -152,7 +153,7 @@ class MetadataParser
 
                     case "Data Owner":
                     case "Eigentümer":
-                    case "Propriétaire":
+                    case "Propriétaire ": // TODO fixme
                     case "Proprietario ":
                         $location['data-owner'] = $value;
                         break;
