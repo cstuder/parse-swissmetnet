@@ -94,6 +94,7 @@ class MetadataParser
      * 
      * @param string $raw SwissMetNet metadata string from CSV file
      * @return stdClass $metadata[array locations, array parameters]
+     * @throws UnexpectedValueException
      */
     public static function parseFromCsvFile(string $raw)
     {
@@ -124,9 +125,8 @@ class MetadataParser
             foreach ($fields as $index => $value) {
                 switch (utf8_encode($headers[$index])) {
                     default:
-                        // Unknown header, do nothing.
-                        var_dump($line, $headers[$index]);
-                        throw new \Exception(utf8_encode($headers[$index])); // TODO remove this.
+                        // Unknown header
+                        throw new \UnexpectedValueException('Unknown header column: ' . utf8_encode($headers[$index]));
                         break;
 
                     case "Station":
@@ -153,7 +153,7 @@ class MetadataParser
 
                     case "Data Owner":
                     case "Eigentümer":
-                    case "Propriétaire ": // TODO fixme
+                    case "Propriétaire ":
                     case "Proprietario ":
                         $location['data-owner'] = $value;
                         break;
