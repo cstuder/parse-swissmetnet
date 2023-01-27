@@ -2,7 +2,7 @@
 
 ![PHPUnit tests](https://github.com/cstuder/parse-swissmetnet/workflows/PHPUnit%20tests/badge.svg)
 
-Simple PHP package to parse SwissMetNet Open Data strings.
+Simple [PHP package](https://packagist.org/packages/cstuder/parse-swissmetnet) to parse SwissMetNet Open Data strings.
 
 **Disclaimer:** This library is not official and not affiliated with MeteoSwiss.
 
