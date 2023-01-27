@@ -6,7 +6,7 @@ Simple PHP package to parse SwissMetNet Open Data strings.
 
 **Disclaimer:** This library is not official and not affiliated with MeteoSwiss.
 
-Created for usage on [api.existenz.ch](https://api.existenz.ch) and indirectly on [Aare.guru](https://aare.guru). As of 2020 in productive use.
+Created for usage on [api.existenz.ch](https://api.existenz.ch) and indirectly on [Aare.guru](https://aare.guru). As of 2023 in productive use.
 
 ## SwissMetNet
 
@@ -68,7 +68,7 @@ COM|201803301120|7.3|0|0.2|185|16.9|1005.2|26.6|94|938.3|1005.8
 
 The metadata files are free form textual files with space separated tables. Good luck parsing those.
 
-Encoding is ISO-8859-1.
+Encoding is ISO-8859-1. This library outputs UTF-8.
 
 Starting from 2021, the metadata is split up into two files: A text file (I.e. `VQHA80_en.txt`) containing the parameter metadata and a link to a CSV (I.e. `ch.meteoschweiz.messnetz-automatisch_en.csv`) containing the location metadata.
 
@@ -89,6 +89,8 @@ $data = \cstuder\ParseSwissMetNet\SuperParser::parse($raw);
 
 var_dump($data);
 ```
+
+See the `bin` directory for more working code.
 
 ## Methods
 
