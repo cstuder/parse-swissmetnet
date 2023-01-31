@@ -19,7 +19,9 @@
       "cstuder\\ParseSwissMetNet\\": "tests/"
     }
   },
-  "require": {},
+  "require": {
+    "cstuder/parse-valueholder": "^0.1.1"
+  },
   "require-dev": {
     "phpunit/phpunit": "^9"
   },
