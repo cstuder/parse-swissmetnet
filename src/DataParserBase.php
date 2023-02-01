@@ -2,6 +2,9 @@
 
 namespace cstuder\ParseSwissMetNet;
 
+use cstuder\ParseValueholder\Row;
+use cstuder\ParseValueholder\Value;
+
 /**
  * Abstract base class for data parsers
  */
@@ -17,11 +20,11 @@ abstract class DataParserBase
      * Parse data string
      * 
      * @param string $raw SwissMetNet data string
-     * @return array
+     * @return Row Parsed data
      */
-    public static function parse(string $raw)
+    public static function parse(string $raw): Row
     {
-        $data = [];
+        $data = new Row();
 
         // Parse data
         $indices = [];
@@ -72,12 +75,14 @@ abstract class DataParserBase
                         $floatValue = floatval($value);
 
                         // All good, insert value
-                        $data[] = (object) ([
-                            'timestamp' => $timestamp,
-                            'loc' => $location,
-                            'par' => $column,
-                            'val' => $floatValue
-                        ]);
+                        $data->append(
+                            new Value(
+                                $timestamp,
+                                $location,
+                                $column,
+                                $floatValue
+                            )
+                        );
 
                         break;
                 }

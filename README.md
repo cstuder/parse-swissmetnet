@@ -102,27 +102,27 @@ Values are converted to `float`. Missing data values are not returned, the value
 
 Parses a SwissMetNet data string, tries out all available parsers one after another. If any of them finds anything, returns that data.
 
-Returns an empty array if no parsers find anything. Use at your own risk.
+Returns an empty row if no parsers find anything. Use at your own risk.
 
-Returns an array of StdClass objects with the keys `timestamp`, `loc`, `par`, `val`.
+Returns a row of value objects with the keys `timestamp`, `loc`, `par`, `val`.
 
 ### `DataParser2020::parse(string $raw)`
 
 Parses a SwissMetNet data string containing semicolon separated measurements in the 2020 version.
 
-Returns an array of StdClass objects with the keys `timestamp`, `loc`, `par`, `val`.
+Returns a row of value objects with the keys `timestamp`, `loc`, `par`, `val`.
 
 ### `DataParser::parse(string $raw)`
 
 Parses a SwissMetNet data string containing semicolon separated measurements.
 
-Returns an array of StdClass objects with the keys `timestamp`, `loc`, `par`, `val`.
+Returns a row of value objects with the keys `timestamp`, `loc`, `par`, `val`.
 
 ### `LegacyDataParser::parse(string $raw)`
 
 Parses an older SwissMetNet data string containing pipe separated measurements.
 
-Returns an array of StdClass objects with the keys `timestamp`, `loc`, `par`, `val`.
+Returns a row of value objects with the keys `timestamp`, `loc`, `par`, `val`.
 
 ### `MetadataParser::parse(string $raw)`
 
