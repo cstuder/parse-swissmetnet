@@ -24,21 +24,21 @@ class SuperParser
         // Try DataParser2020
         $data = DataParser2020::parse($raw);
 
-        if (!empty($data->values)) {
+        if (!empty($data->getValues())) {
             return $data;
         }
 
         // Try DataParser
         $data = DataParser::parse($raw);
 
-        if (!empty($data->values)) {
+        if (!empty($data->getValues())) {
             return $data;
         }
 
         // Try LegacyDataParser
         $data = LegacyDataParser::parse($raw);
 
-        if (!empty($data->values)) {
+        if (!empty($data->getValues())) {
             return $data;
         }
 

@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3aa194de97a62e196aff05d5f32de58a",
+    "content-hash": "4d0241f18dc050cdefe11e91b8aec98a",
     "packages": [
         {
             "name": "cstuder/parse-valueholder",
-            "version": "v0.1.1",
+            "version": "v0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cstuder/parse-valueholder.git",
-                "reference": "0cc82434c54ce75cbc2126dbd0d9fa2e702c1a12"
+                "reference": "6684a81e891b418c033c722a255491b4dcec3df7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cstuder/parse-valueholder/zipball/0cc82434c54ce75cbc2126dbd0d9fa2e702c1a12",
-                "reference": "0cc82434c54ce75cbc2126dbd0d9fa2e702c1a12",
+                "url": "https://api.github.com/repos/cstuder/parse-valueholder/zipball/6684a81e891b418c033c722a255491b4dcec3df7",
+                "reference": "6684a81e891b418c033c722a255491b4dcec3df7",
                 "shasum": ""
             },
             "require": {
@@ -45,9 +45,9 @@
             "description": "PHP value holder objects for `parse-hydrodaten` and `parse-swissmetnet`",
             "support": {
                 "issues": "https://github.com/cstuder/parse-valueholder/issues",
-                "source": "https://github.com/cstuder/parse-valueholder/tree/v0.1.1"
+                "source": "https://github.com/cstuder/parse-valueholder/tree/v0.2.0"
             },
-            "time": "2023-01-30T20:48:32+00:00"
+            "time": "2023-02-01T21:02:50+00:00"
         }
     ],
     "packages-dev": [
