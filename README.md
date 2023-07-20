@@ -1,6 +1,6 @@
 # parse-swissmetnet
 
-![PHPUnit tests](https://github.com/cstuder/parse-swissmetnet/workflows/PHPUnit%20tests/badge.svg)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) ![PHPUnit tests](https://github.com/cstuder/parse-swissmetnet/workflows/PHPUnit%20tests/badge.svg)
 
 Simple [PHP package](https://packagist.org/packages/cstuder/parse-swissmetnet) to parse SwissMetNet Open Data strings.
 
@@ -10,7 +10,7 @@ Created for usage on [api.existenz.ch](https://api.existenz.ch) and indirectly o
 
 ## SwissMetNet
 
-[MeteoSwiss](https://www.meteoschweiz.admin.ch/) (Bundesamt für Meteorologie und Klimatologie/Federal Office of Meteorology and Climatology) offers a selection of their [SwissMetNet](https://www.meteoswiss.admin.ch/home/measurement-and-forecasting-systems/land-based-stations/automatisches-messnetz.html) data on the [opendata.swiss portal](https://opendata.swiss/en/dataset/automatische-wetterstationen-aktuelle-messwerte).
+[MeteoSwiss](https://www.meteoschweiz.admin.ch/) (Bundesamt für Meteorologie und Klimatologie/Federal Office of Meteorology and Climatology) offers a selection of their [SwissMetNet](https://www.meteoswiss.admin.ch/home/measurement-and-forecasting-systems/land-based-stations/automatisches-messnetz.html) measurement data on the [opendata.swiss portal](https://opendata.swiss/en/dataset/automatische-wetterstationen-aktuelle-messwerte).
 
 Measures air temperatures, rain rate, winds, pressure, geopotentials and sunshine duration. Not every station measures every parameter.
 
@@ -51,7 +51,7 @@ COM;201911222230;4.1;0.1;0;1;99;4.0;343;3.6;5.0;944.1;1012.9;1011.4;-;-;-;-;-;-;
 ...
 ```
 
-#### Legay data format
+### Legay data format
 
 Older data files like `VQHA69.csv` used the pipe symbol as separators:
 
@@ -64,7 +64,7 @@ COM|201803301120|7.3|0|0.2|185|16.9|1005.2|26.6|94|938.3|1005.8
 ...
 ```
 
-#### Metadata format
+### Metadata format
 
 The metadata files are free form textual files with space separated tables. Good luck parsing those.
 

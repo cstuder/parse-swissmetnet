@@ -231,6 +231,11 @@ class MetadataParser
                     case "Collegamento":
                         $location['link'] = $value;
                         break;
+
+                    case "Exposition":
+                    case "Esposizione":
+                        $location['exposition'] = $value;
+                        break;
                 }
             }
 
