@@ -99,6 +99,8 @@ class MetadataParser
     public static function parseFromCsvFile(string $raw)
     {
         $separator = ';';
+        $enclosure = '"';
+        $escape = '';
 
         $metadata = new \stdClass();
         $metadata->locations = [];
@@ -111,14 +113,14 @@ class MetadataParser
 
         $lines = explode("\n", $raw);
 
-        $headers = str_getcsv(array_shift($lines), $separator);
+        $headers = str_getcsv(array_shift($lines), $separator, $enclosure, $escape);
 
         foreach ($lines as $line) {
             if (empty(trim($line))) {
                 break;
             }
 
-            $fields = str_getcsv($line, $separator);
+            $fields = str_getcsv($line, $separator, $enclosure, $escape);
 
             $location = [];
 
