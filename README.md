@@ -6,26 +6,39 @@ Simple [PHP package](https://packagist.org/packages/cstuder/parse-swissmetnet) t
 
 **Disclaimer:** This library is not official and not affiliated with MeteoSwiss.
 
-Created for usage on [api.existenz.ch](https://api.existenz.ch) and indirectly on [Aare.guru](https://aare.guru). As of 2023 in productive use.
+Created for usage on [api.existenz.ch](https://api.existenz.ch) and indirectly on [Aare.guru](https://aare.guru). As of 2025 in productive use.
 
 ## SwissMetNet
 
-[MeteoSwiss](https://www.meteoschweiz.admin.ch/) (Bundesamt für Meteorologie und Klimatologie/Federal Office of Meteorology and Climatology) offers a selection of their [SwissMetNet](https://www.meteoswiss.admin.ch/home/measurement-and-forecasting-systems/land-based-stations/automatisches-messnetz.html) measurement data on the [opendata.swiss portal](https://opendata.swiss/en/dataset/automatische-wetterstationen-aktuelle-messwerte).
+Starting from may 2025, [MeteoSwiss](https://www.meteoschweiz.admin.ch/) (Bundesamt für Meteorologie und Klimatologie/Federal Office of Meteorology and Climatology) publishes their [SwissMetNet](https://www.meteoswiss.admin.ch/home/measurement-and-forecasting-systems/land-based-stations/automatisches-messnetz.html) measurement data on the new [Data Geo Admin Portal](https://data.geo.admin.ch/browser/index.html#/collections/ch.meteoschweiz.ogd-smn). See their [Open Data Documentation](https://opendatadocs.meteoswiss.ch) for further information.
 
-Measures air temperatures, rain rate, winds, pressure, geopotentials and sunshine duration. Not every station measures every parameter.
+Measures air temperatures, rain rate/precipitation, wind, pressure, geopotentials and sunshine duration. Not every station measures every parameter.
 
 Note that most stations measure this 2 meters above ground, but some tower stations locate their sensors higher in the air. The parameters with suffix `_tow` are measured on tower stations.
 
 Periodicity: 10 minutes.
 
-**Licencing restrictions apply by MeteoSwiss.** See the Open Data download for detailed informations. You will have to credit any usage of the data with the string "Source: MeteoSwiss".
+**Licencing restrictions apply by MeteoSwiss.** [CC-BY](https://creativecommons.org/licenses/by/4.0/). You will have to credit any usage of the data with the string "Source: MeteoSwiss". See the official [Terms of Use](https://opendatadocs.meteoswiss.ch/general/terms-of-use) for details.
 
 ### Getting the data
 
-1. Download the ZIP archive from the [Open Data portal](https://opendata.swiss/en/dataset/automatische-wetterstationen-aktuelle-messwerte).
-2. Read the legal and licencing information.
-3. Open `1_download_URL.txt`.
-4. Find the links to the data CSVs (I.e. `VQHA80.csv` or `VQHA98.csv`) and metadata TXTs.
+1. Go to the STAC browser for the [Automatic weather stations](https://data.geo.admin.ch/browser/index.html#/collections/ch.meteoschweiz.ogd-smn).
+1. Download the assets for station and parameter metadata CSV files.
+1. Go to the desired station.
+1. Download the assets for the measurement data as CSV files.
+
+There is a special file called `VQHA80.csv`only mentioned [in the documentation](https://opendatadocs.meteoswiss.ch/a-data-groundbased/a1-automatic-weather-stations?data-structure=one-file-with-all-stations). It contains last measured values for all stations for the main parameters. This file is updated every 10 minutes.
+
+### Data format 2025
+
+Starting from may 2025 the assets with historical data are pubslished. They differ slightly again from the previous format: Different headers and a different time format:
+
+```csv
+station_abbr;reference_timestamp;tre200s0;tre005s0;tresurs0;xchills0;ure200s0;tde200s0;pva200s0;prestas0;pp0qnhs0;pp0qffs0;ppz850s0;ppz700s0;fkl010z1;fve010z0;fkl010z0;dkl010z0;wcc006s0;fu3010z0;fkl010z3;fu3010z1;fu3010z3;rre150z0;htoauts0;gre000z0;ods000z0;oli000z0;olo000z0;osr000z0;sre000z0
+BER;01.02.2004 00:00;7.4;1.7;;;66.2;1.5;6.8;955.5;1022.3;1023.1;;;5.8;3;;258;;10.8;;20.9;;0;;6;;;;;0
+BER;01.02.2004 00:10;7.6;1.8;;;65.7;1.6;6.9;955.5;1022.3;1023;;;7.9;3.6;;246;;13;;28.4;;0;;0;;;;;0
+...
+```
 
 ### Data format 2020
 
@@ -66,11 +79,13 @@ COM|201803301120|7.3|0|0.2|185|16.9|1005.2|26.6|94|938.3|1005.8
 
 ### Metadata format
 
-The metadata files are free form textual files with space separated tables. Good luck parsing those.
+The legacy metadata files are free form textual files with space separated tables. Good luck parsing those.
 
 Encoding is ISO-8859-1. This library outputs UTF-8.
 
 Starting from 2021, the metadata is split up into two files: A text file (I.e. `VQHA80_en.txt`) containing the parameter metadata and a link to a CSV (I.e. `ch.meteoschweiz.messnetz-automatisch_en.csv`) containing the location metadata.
+
+Starting from 2025, the metadata is published as CSV files. (`ogd-smn_meta_stations.csv` and `ogd-smn_meta_parameters.csv`).
 
 ## Installation
 
@@ -140,7 +155,7 @@ Returns two fields: `locations` and `parameters`, both containing arrays of StdC
 
 ### `MetadataParser::parseFromCsvFile(string $raw)`
 
-Parses a SwissMetNet description string from a file like `ch.meteoschweiz.messnetz-automatisch_en.txt` containing location and parameter definitions.
+Parses a SwissMetNet description string from a file like `ogd-smn_meta_stations.csv` containing location and parameter definitions.
 
 Returns two fields: `locations` and `parameters`, both containing arrays of StdClass objects with fields such as location coordinates or parameter units.
 

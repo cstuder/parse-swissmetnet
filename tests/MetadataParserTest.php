@@ -68,4 +68,25 @@ class MetadataParserTest extends TestCase
         $this->assertContainsOnlyInstancesOf('StdClass', $data->locations);
         $this->assertContainsOnlyInstancesOf('StdClass', $data->parameters);
     }
+
+    public function testParseMetadata2025()
+    {
+        $raw = file_get_contents(__DIR__ . '/resources/validMetadata/2025/ogd-smn_meta_stations.csv');
+        $data = \cstuder\ParseSwissMetNet\MetadataParser::parse($raw);
+
+        $this->assertEquals(158, count($data->locations));
+        $this->assertEquals(0, count($data->parameters));
+
+        $this->assertContainsOnlyInstancesOf('StdClass', $data->locations);
+        $this->assertContainsOnlyInstancesOf('StdClass', $data->parameters);
+
+        $raw = file_get_contents(__DIR__ . '/resources/validMetadata/2025/ogd-smn_meta_parameters.csv');
+        $data = \cstuder\ParseSwissMetNet\MetadataParser::parse($raw);
+
+        $this->assertEquals(0, count($data->locations));
+        $this->assertEquals(154, count($data->parameters));
+
+        $this->assertContainsOnlyInstancesOf('StdClass', $data->locations);
+        $this->assertContainsOnlyInstancesOf('StdClass', $data->parameters);
+    }
 }

@@ -92,6 +92,8 @@ class MetadataParser
      * As of 2021 only parameter metadata is stored in text files. Location metadata is stored
      * in CSV files.
      * 
+     * As of 2025 both parameter and location metadata are stored in CSV files.
+     * 
      * @param string $raw SwissMetNet metadata string from CSV file
      * @return stdClass $metadata[array locations, array parameters]
      * @throws UnexpectedValueException
@@ -101,13 +103,28 @@ class MetadataParser
         $separator = ';';
         $enclosure = '"';
         $escape = '';
+        $csvIdentifiers = [
+            '"Station"',
+            '"Stazione"',
+            'station_abbr',
+            'parameter_shortname',
+        ];
 
         $metadata = new \stdClass();
         $metadata->locations = [];
         $metadata->parameters = [];
 
-        if (substr($raw, 0, 10) != '"Station";' && substr($raw, 0, 11) != '"Stazione";') {
-            // Probably not the CSV we're looking for
+        $isCsv = false;
+        foreach ($csvIdentifiers as $identifier) {
+            if (str_starts_with($raw, $identifier)) {
+                // Found a CSV file with the expected identifiers
+                $isCsv = true;
+                break;
+            }
+        }
+
+        if (!$isCsv) {
+            // Not a CSV file, return empty metadata
             return $metadata;
         }
 
@@ -123,6 +140,7 @@ class MetadataParser
             $fields = str_getcsv($line, $separator, $enclosure, $escape);
 
             $location = [];
+            $parameter = [];
 
             foreach ($fields as $index => $value) {
                 switch (self::iso_decode($headers[$index])) {
@@ -131,18 +149,23 @@ class MetadataParser
                         throw new \UnexpectedValueException('Unknown header column: ' . self::iso_decode($headers[$index]));
                         break;
 
+                    // Location metadata
+
                     case "Station":
                     case "Stazione":
+                    case "station_name":
                         $location['name'] = self::iso_decode($value);
                         break;
 
                     case "Abbr.":
                     case "Abk.":
                     case "Abr.":
+                    case "station_abbr":
                         $location['id'] = $value;
                         break;
 
                     case "WIGOS-ID":
+                    case "station_wigos_id":
                         $location['wigos-id'] = $value ? $value : null;
                         break;
 
@@ -150,13 +173,27 @@ class MetadataParser
                     case "Stationstyp":
                     case "Type de station":
                     case "Tipo di stazione":
+                    case "station_type_en":
                         $location['station-type'] = $value;
+                        break;
+
+                    case "station_type_de":
+                        $location['station-type-de'] = self::iso_decode($value);
+                        break;
+
+                    case "station_type_fr":
+                        $location['station-type-fr'] = self::iso_decode($value);
+                        break;
+
+                    case "station_type_it":    
+                        $location['station-type-it'] = self::iso_decode($value);
                         break;
 
                     case "Data Owner":
                     case "Eigentümer":
                     case "Propriétaire ":
                     case "Proprietario ":
+                    case "station_dataowner":
                         $location['data-owner'] = $value;
                         break;
 
@@ -164,6 +201,7 @@ class MetadataParser
                     case "Daten seit":
                     case "Données depuis":
                     case "Dati dal":
+                    case "station_data_since":
                         $location['data-since'] = $value;
                         break;
 
@@ -175,6 +213,7 @@ class MetadataParser
                     case "Stationshöhe m ü. M.":
                     case "Altitude station m s. mer":
                     case "Altitudine stazione m slm":
+                    case "station_height_masl":
                         $location['alt'] = intval($value);
                         break;
 
@@ -186,6 +225,7 @@ class MetadataParser
                     case "Barometerhöhe m ü. Boden":
                     case "Altitude du baromètre m s. sol":
                     case "Altitudine del barometro m da terra":
+                    case "station_height_barometer_masl":
                         $location['alt-barometric'] = $value ? intval($value) : null;
                         break;
 
@@ -203,21 +243,32 @@ class MetadataParser
                         $location['chy'] = intval($value);
                         break;
 
+                    case "station_coordinates_lv95_east":
+                        $location['chx-lv95'] = intval($value);
+                        break;
+
+                    case "station_coordinates_lv95_north":
+                        $location['chy-lv95'] = intval($value);
+                        break;
+
                     case "Latitude":
                     case "Breitengrad":
                     case "Latitudine":
+                    case "station_coordinates_wgs84_lat":
                         $location['lat'] = floatval($value);
                         break;
 
                     case "Longitude":
                     case "Längengrad":
-                    case "Longitudine ":
+                    case "Longitudine ": // Trailing space intentional
+                    case "station_coordinates_wgs84_lon":
                         $location['lon'] = floatval($value);
                         break;
 
                     case "Canton":
                     case "Kanton":
                     case "Cantone":
+                    case "station_canton":
                         $location['canton'] = $value;
                         break;
 
@@ -231,17 +282,105 @@ class MetadataParser
                     case "Link":
                     case "Lien":
                     case "Collegamento":
+                    case "station_url_en":
                         $location['link'] = $value;
+                        break;
+
+                    case "station_url_de":
+                        $location['link-de'] = self::iso_decode($value);
+                        break;
+
+                    case "station_url_fr":
+                        $location['link-fr'] = self::iso_decode($value);
+                        break;
+
+                    case "station_url_it":
+                        $location['link-it'] = self::iso_decode($value);
                         break;
 
                     case "Exposition":
                     case "Esposizione":
-                        $location['exposition'] = $value;
+                    case "station_exposition_en":
+                        $location['exposition'] = self::iso_decode($value);
+                        break;
+
+                    case "station_exposition_de":
+                        $location['exposition-de'] = self::iso_decode($value);
+                        break;
+
+                    case "station_exposition_fr":
+                        $location['exposition-fr'] = self::iso_decode($value);
+                        break;
+
+                    case "station_exposition_it":
+                        $location['exposition-it'] = self::iso_decode($value);
+                        break;
+
+                    // Parameter metadata
+
+                    case "parameter_shortname":
+                        $parameter['id'] = $value;
+                        break;
+
+                    case "parameter_description_en":
+                        $parameter['description'] = self::iso_decode($value);
+                        break;
+
+                    case "parameter_description_de":
+                        $parameter['description-de'] = self::iso_decode($value);
+                        break;
+
+                    case "parameter_description_fr":
+                        $parameter['description-fr'] = self::iso_decode($value);
+                        break;
+
+                    case "parameter_description_it":
+                        $parameter['description-it'] = self::iso_decode($value);
+                        break;
+
+                    case "parameter_group_en":
+                        $parameter['group'] = self::iso_decode($value);
+                        break;
+
+                    case "parameter_group_de":
+                        $parameter['group-de'] = self::iso_decode($value);
+                        break;
+
+                    case "parameter_group_fr":
+                        $parameter['group-fr'] = self::iso_decode($value);
+                        break;
+
+                    case "parameter_group_it":
+                        $parameter['group-it'] = self::iso_decode($value);
+                        break;
+
+                    case "parameter_granularity":
+                        $parameter['granularity'] = self::iso_decode($value);
+                        break;
+
+                    case "parameter_decimals":
+                        $parameter['decimals'] = intval($value);
+                        break;
+
+                    case "parameter_datatype":
+                        $parameter['datatype'] = self::iso_decode($value);
+                        break;
+
+                    case "parameter_unit":
+                        $parameter['unit'] = self::iso_decode($value);
                         break;
                 }
             }
 
-            $metadata->locations[] = (object) $location;
+            if (!empty($location)) {
+                // Add location to metadata
+                $metadata->locations[] = (object) $location;
+            }
+
+            if (!empty($parameter)) {
+                // Add parameter to metadata
+                $metadata->parameters[] = (object) $parameter;
+            }
         }
 
         return $metadata;
