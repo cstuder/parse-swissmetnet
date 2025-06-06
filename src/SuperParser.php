@@ -22,6 +22,13 @@ class SuperParser
     public static function parse(string $raw)
     {
         // Try DataParser2020
+        $data = DataParser2025::parse($raw);
+
+        if (!empty($data->getValues())) {
+            return $data;
+        }
+
+        // Try DataParser2020
         $data = DataParser2020::parse($raw);
 
         if (!empty($data->getValues())) {

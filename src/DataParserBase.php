@@ -72,6 +72,10 @@ abstract class DataParserBase
                             break;
                         }
 
+                        if($value === '') {
+                            break;
+                        }
+
                         $floatValue = floatval($value);
 
                         // All good, insert value

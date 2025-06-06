@@ -10,9 +10,9 @@ Created for usage on [api.existenz.ch](https://api.existenz.ch) and indirectly o
 
 ## SwissMetNet
 
-Starting from may 2025, [MeteoSwiss](https://www.meteoschweiz.admin.ch/) (Bundesamt für Meteorologie und Klimatologie/Federal Office of Meteorology and Climatology) publishes their [SwissMetNet](https://www.meteoswiss.admin.ch/home/measurement-and-forecasting-systems/land-based-stations/automatisches-messnetz.html) measurement data on the new [Data Geo Admin Portal](https://data.geo.admin.ch/browser/index.html#/collections/ch.meteoschweiz.ogd-smn). See their [Open Data Documentation](https://opendatadocs.meteoswiss.ch) for further information.
+Starting from may 2025, [MeteoSwiss](https://www.meteoschweiz.admin.ch/) (Bundesamt für Meteorologie und Klimatologie/Federal Office of Meteorology and Climatology) publishes their [SwissMetNet](https://www.meteoswiss.admin.ch/home/measurement-and-forecasting-systems/land-based-stations/automatisches-messnetz.html) measurement data on the new [OGD Portal](https://data.geo.admin.ch/browser/index.html#/collections/ch.meteoschweiz.ogd-smn). See their [Open Data Documentation](https://opendatadocs.meteoswiss.ch) for further information.
 
-Measures air temperatures, rain rate/precipitation, wind, pressure, geopotentials and sunshine duration. Not every station measures every parameter.
+Measures air temperatures, rain rate/precipitation, wind, pressure, geopotentials, sunshine duration and more. Not every station measures every parameter.
 
 Note that most stations measure this 2 meters above ground, but some tower stations locate their sensors higher in the air. The parameters with suffix `_tow` are measured on tower stations.
 
@@ -31,7 +31,7 @@ There is a special file called `VQHA80.csv`only mentioned [in the documentation]
 
 ### Data format 2025
 
-Starting from may 2025 the assets with historical data are pubslished. They differ slightly again from the previous format: Different headers and a different time format:
+Starting from may 2025 the assets with historical data are published. They differ slightly again from the previous format: Different headers and a different time format:
 
 ```csv
 station_abbr;reference_timestamp;tre200s0;tre005s0;tresurs0;xchills0;ure200s0;tde200s0;pva200s0;prestas0;pp0qnhs0;pp0qffs0;ppz850s0;ppz700s0;fkl010z1;fve010z0;fkl010z0;dkl010z0;wcc006s0;fu3010z0;fkl010z3;fu3010z1;fu3010z3;rre150z0;htoauts0;gre000z0;ods000z0;oli000z0;olo000z0;osr000z0;sre000z0
@@ -42,7 +42,7 @@ BER;01.02.2004 00:10;7.6;1.8;;;65.7;1.6;6.9;955.5;1022.3;1023;;;7.9;3.6;;246;;13
 
 ### Data format 2020
 
-Starting from 2020-10-19 the data format of `VQHA80` changed slighty from the original format: They are now valid CSV files, semicolon separated, with a new header line:
+Starting from 2020-10-19 the data format of `VQHA80` changed slighty from the orginial CSV format: They are now valid CSV files, semicolon separated, with a new header line:
 
 ```csv
 Station/Location;Date;tre200s0;rre150z0;sre000z0;gre000z0;ure200s0;tde200s0;dkl010z0;fu3010z0;fu3010z1;prestas0;pp0qffs0;pp0qnhs0;ppz850s0;ppz700s0;dv1towz0;fu3towz0;fu3towz1;ta1tows0;uretows0;tdetows0
@@ -85,7 +85,7 @@ Encoding is ISO-8859-1. This library outputs UTF-8.
 
 Starting from 2021, the metadata is split up into two files: A text file (I.e. `VQHA80_en.txt`) containing the parameter metadata and a link to a CSV (I.e. `ch.meteoschweiz.messnetz-automatisch_en.csv`) containing the location metadata.
 
-Starting from 2025, the metadata is published as CSV files. (`ogd-smn_meta_stations.csv` and `ogd-smn_meta_parameters.csv`).
+Starting from 2025, all metadata is published as CSV files. (`ogd-smn_meta_stations.csv` and `ogd-smn_meta_parameters.csv`).
 
 ## Installation
 
@@ -118,6 +118,12 @@ Values are converted to `float`. Missing data values are not returned, the value
 Parses a SwissMetNet data string, tries out all available parsers one after another. If any of them finds anything, returns that data.
 
 Returns an empty row if no parsers find anything. Use at your own risk.
+
+Returns a row of value objects with the keys `timestamp`, `loc`, `par`, `val`.
+
+### `DataParser2025::parse(string $raw)`
+
+Parses a SwissMetNet data string containing semicolon separated measurements in the OGD 2025 version.
 
 Returns a row of value objects with the keys `timestamp`, `loc`, `par`, `val`.
 

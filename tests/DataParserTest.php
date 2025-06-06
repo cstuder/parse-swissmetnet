@@ -58,4 +58,17 @@ class DataParserTest extends TestCase
 
         $this->assertContainsOnlyInstancesOf('cstuder\ParseValueholder\Value', $data->getValues());
     }
+
+    public function testParseOgdData2025()
+    {
+        $raw = file_get_contents(__DIR__ . '/resources/validData/ogd-smn_ber_t_historical_2000-2009_shortened.csv');
+        $data = \cstuder\ParseSwissMetNet\DataParser2025::parse($raw);
+
+        $this->assertEquals(64, $data->getCount());
+        $this->assertEquals(16, count($data->getParameters()));
+        $this->assertEquals(1, count($data->getLocations()));
+        $this->assertEquals(4, count($data->getTimestamps()));
+
+        $this->assertContainsOnlyInstancesOf('cstuder\ParseValueholder\Value', $data->getValues());
+    }
 }
